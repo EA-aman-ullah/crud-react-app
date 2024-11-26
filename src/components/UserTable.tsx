@@ -1,22 +1,13 @@
-import axios, { CanceledError, GenericAbortSignal } from "axios";
-import { useEffect, useState } from "react";
-import UpdateUser from "./UpdateUser";
+import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-
-export interface User {
-  _id: string;
-  name: string;
-  email: string;
-  gender: string;
-  phoneNo: string;
-  title: string;
-}
+import useUsers from "../hooks/useUsers";
+import userService, { User } from "../services/user-service";
+import UpdateUser from "./UpdateUser";
 
 export type UserWithoutId = Omit<User, "_id">;
 
 const UserTable = () => {
-  const [users, setUsers] = useState<User[]>();
-  const [error, setError] = useState();
+  const { users, error, reFetch, setUsers, setError } = useUsers();
   const [isValid, setValid] = useState(true);
   const [person, setPerson] = useState({
     name: "",
@@ -27,7 +18,7 @@ const UserTable = () => {
   });
 
   const success = () => {
-    toast.success("Successfully Updated", {
+    toast.success("Opration Successfull", {
       autoClose: 3000,
       position: "top-right",
     });
@@ -38,50 +29,33 @@ const UserTable = () => {
     setPerson({ ...person, [name]: event.target.value });
   };
 
-  const getAll = (signal: GenericAbortSignal) => {
-    axios
-      .get<User[]>("http://localhost:3000/user", { signal: signal })
-      .then((result) => setUsers(result.data))
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-      });
-  };
-
-  useEffect(() => {
-    const controller = new AbortController();
-    getAll(controller.signal);
-    return () => controller.abort();
-  }, []);
-
   const deleteUser = (id: string) => {
-    const controller = new AbortController();
     const orignalUser = users ? [...users] : [];
 
     setUsers(users?.filter((u) => u._id !== id));
-    axios
-      .delete(`http://localhost:3000/user/${id}`)
-      .then(() => getAll(controller.signal))
+    userService
+      .delete(id)
+      .then(() => {
+        success();
+        reFetch();
+      })
       .catch((err) => {
-        setError(err.message);
         setUsers(orignalUser);
+        setError(err.message);
       });
   };
 
   const updateUser = (id: string, user: UserWithoutId) => {
-    const { signal } = new AbortController();
-
-    axios
-      .put(`http://localhost:3000/user/${id}`, user)
+    userService
+      .update<UserWithoutId>(id, user)
       .then(() => {
-        getAll(signal);
         success();
+        reFetch();
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => setError(err.message));
   };
 
   const addUser = () => {
-    const { signal } = new AbortController();
     if (
       /^[a-zA-Z ]{3,}$/.test(person.name) &&
       /^[a-zA-Z ]{3,}$/.test(person.title) &&
@@ -89,10 +63,10 @@ const UserTable = () => {
       person.phoneNo.length > 9 &&
       /^([^@\s]+)[@]((?:[-a-z0-9]+\.)+[a-z]{3,})$/i.test(person.email)
     ) {
-      axios
-        .post("http://localhost:3000/user", person)
+      userService
+        .add<UserWithoutId>(person)
         .then(() => {
-          getAll(signal);
+          reFetch();
           setPerson({
             name: "",
             email: "",
@@ -101,6 +75,7 @@ const UserTable = () => {
             title: "",
           });
           setValid(true);
+          success();
         })
         .catch((err) => setError(err.message));
     } else {

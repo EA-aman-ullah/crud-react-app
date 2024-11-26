@@ -9,4 +9,4 @@ export interface User {
   gender: string;
 }
 
-export default creat("/users");
+export default creat("/user");

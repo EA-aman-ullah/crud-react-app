@@ -1,9 +1,5 @@
 import apiClient from "./api-client";
 
-interface Entity {
-  id: string;
-}
-
 class HttpService {
   endpoint: string;
 
@@ -24,8 +20,8 @@ class HttpService {
   add<T>(user: T) {
     return apiClient.post(this.endpoint, user);
   }
-  update<T extends Entity>(user: T) {
-    return apiClient.put(this.endpoint + "/" + user.id, user);
+  update<T>(id: string, user: T) {
+    return apiClient.put(this.endpoint + "/" + id, user);
   }
 }
 

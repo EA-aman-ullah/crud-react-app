@@ -5,10 +5,15 @@ import { CanceledError } from "../services/api-client";
 const useUsers = () => {
   const [users, setUsers] = useState<User[]>();
   const [error, setError] = useState();
+  const [fetch, setFetch] = useState(false);
+
+  const reFetch = () => {
+    setFetch(!fetch);
+  };
 
   useEffect(() => {
     const { request, cancel } = userService.getAll<User>();
-
+    // setRequest(request as any);
     request
       .then((res) => {
         setUsers(res.data);
@@ -19,8 +24,14 @@ const useUsers = () => {
       });
 
     return () => cancel();
-  }, []);
-  return { users, error, setUsers, setError };
+  }, [fetch]);
+  return {
+    users,
+    error,
+    reFetch,
+    setUsers,
+    setError,
+  };
 };
 
 export default useUsers;

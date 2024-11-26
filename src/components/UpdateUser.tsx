@@ -1,5 +1,6 @@
-import { User, UserWithoutId } from "./UserTable";
+import { UserWithoutId } from "./UserTable";
 import Form from "./Form";
+import { User } from "../services/user-service";
 
 interface Props {
   user: User;
