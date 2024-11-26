@@ -112,14 +112,12 @@ const Form = ({ user, updateUser }: Props) => {
             className="form-control"
           />
           {person.title.length === 0 && isValid && (
-            <p className="text-danger">Please Enter Your Name</p>
+            <p className="text-danger">Please Enter Title</p>
           )}
           {!(person.title.length === 0) &&
             !/^[a-zA-Z]{4,}$/.test(person.name) &&
             isValid && (
-              <p className="text-danger">
-                Name must be at least 4 alphabets charecters
-              </p>
+              <p className="text-danger">Title must be at least 4 charecters</p>
             )}
         </div>
         <div className="mb-3">
@@ -132,13 +130,13 @@ const Form = ({ user, updateUser }: Props) => {
             className="form-control"
           />
           {person.gender.length === 0 && isValid && (
-            <p className="text-danger">Please Enter Your Name</p>
+            <p className="text-danger">Please Enter a gender</p>
           )}
           {!(person.gender.length === 0) &&
             !/^[a-zA-Z]{4,}$/.test(person.name) &&
             isValid && (
               <p className="text-danger">
-                Name must be at least 4 alphabets charecters
+                Gender must be at least 4 alphabets charecters
               </p>
             )}
         </div>
