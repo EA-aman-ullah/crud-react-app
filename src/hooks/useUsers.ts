@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 const useUsers = () => {
   const [users, setUsers] = useState<User[]>();
   const [error, setError] = useState();
+  const [isLoading, setLoading] = useState(true);
   const [fetch, setFetch] = useState(false);
 
   const reFetch = () => {
@@ -21,14 +22,15 @@ const useUsers = () => {
 
   useEffect(() => {
     const { request, cancel } = userService.getAll<User>();
-    // setRequest(request as any);
     request
       .then((res) => {
         setUsers(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
         setError(err.message);
+        setLoading(false);
       });
 
     return () => cancel();
@@ -36,6 +38,7 @@ const useUsers = () => {
   return {
     users,
     error,
+    isLoading,
     reFetch,
     setUsers,
     setError,

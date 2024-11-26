@@ -3,11 +3,13 @@ import { ToastContainer } from "react-toastify";
 import useUsers from "../hooks/useUsers";
 import userService, { User } from "../services/user-service";
 import UpdateUser from "./UpdateUser";
+import Loader from "./Loader";
 
 export type UserWithoutId = Omit<User, "_id">;
 
 const UserTable = () => {
-  const { users, error, reFetch, setUsers, setError, success } = useUsers();
+  const { users, error, isLoading, reFetch, setUsers, setError, success } =
+    useUsers();
   const [isValid, setValid] = useState(true);
   const [person, setPerson] = useState({
     name: "",
@@ -75,6 +77,8 @@ const UserTable = () => {
       setValid(false);
     }
   };
+
+  if (isLoading) return <Loader />;
 
   if (error) return <div>{error}</div>;
 
