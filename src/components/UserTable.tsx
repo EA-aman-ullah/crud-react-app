@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import useUsers from "../hooks/useUsers";
 import userService, { User } from "../services/user-service";
 import UpdateUser from "./UpdateUser";
@@ -7,7 +7,7 @@ import UpdateUser from "./UpdateUser";
 export type UserWithoutId = Omit<User, "_id">;
 
 const UserTable = () => {
-  const { users, error, reFetch, setUsers, setError } = useUsers();
+  const { users, error, reFetch, setUsers, setError, success } = useUsers();
   const [isValid, setValid] = useState(true);
   const [person, setPerson] = useState({
     name: "",
@@ -16,13 +16,6 @@ const UserTable = () => {
     title: "",
     gender: "",
   });
-
-  const success = () => {
-    toast.success("Opration Successfull", {
-      autoClose: 3000,
-      position: "top-right",
-    });
-  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let name = event.target.name;
