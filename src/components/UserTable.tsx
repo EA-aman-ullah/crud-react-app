@@ -127,7 +127,7 @@ const UserTable = () => {
           <tr>
             <td>
               <input
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
                 value={person.name}
                 name="name"
                 className={
@@ -140,7 +140,7 @@ const UserTable = () => {
             </td>
             <td>
               <input
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
                 value={person.email}
                 name="email"
                 className={
@@ -155,7 +155,7 @@ const UserTable = () => {
             </td>
             <td>
               <input
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
                 value={person.phoneNo}
                 name="phoneNo"
                 type="number"
@@ -168,7 +168,7 @@ const UserTable = () => {
             </td>
             <td>
               <input
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
                 value={person.title}
                 name="title"
                 className={
@@ -181,7 +181,7 @@ const UserTable = () => {
             </td>
             <td>
               <input
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
                 value={person.gender}
                 name="gender"
                 className={
