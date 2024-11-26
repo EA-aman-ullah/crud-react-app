@@ -33,7 +33,7 @@ const UserTable = () => {
     });
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let name = event.target.name;
     setPerson({ ...person, [name]: event.target.value });
   };
@@ -127,7 +127,7 @@ const UserTable = () => {
           <tr>
             <td>
               <input
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 value={person.name}
                 name="name"
                 className={
@@ -140,7 +140,7 @@ const UserTable = () => {
             </td>
             <td>
               <input
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 value={person.email}
                 name="email"
                 className={
@@ -155,7 +155,7 @@ const UserTable = () => {
             </td>
             <td>
               <input
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 value={person.phoneNo}
                 name="phoneNo"
                 type="number"
@@ -168,7 +168,7 @@ const UserTable = () => {
             </td>
             <td>
               <input
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 value={person.title}
                 name="title"
                 className={
@@ -181,7 +181,7 @@ const UserTable = () => {
             </td>
             <td>
               <input
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 value={person.gender}
                 name="gender"
                 className={

@@ -17,7 +17,7 @@ const Form = ({ user, updateUser }: Props) => {
 
   const [isValid, setValid] = useState(false);
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let name = event.target.name;
     setPerson({ ...person, [name]: event.target.value });
   };
