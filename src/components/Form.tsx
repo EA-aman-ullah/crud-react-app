@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import {  UserWithoutId } from "./UserTable";
+import { UserWithoutId } from "./UserTable";
 import { User } from "../services/user-service";
 
 interface Props {
@@ -8,13 +8,7 @@ interface Props {
 }
 
 const Form = ({ user, updateUser }: Props) => {
-  const [person, setPerson] = useState({
-    name: user.name,
-    email: user.email,
-    phoneNo: user.phoneNo,
-    title: user.title,
-    gender: user.gender,
-  });
+  const [person, setPerson] = useState(user);
 
   const [isValid, setValid] = useState(false);
 
